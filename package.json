@@ -1,7 +1,7 @@
 {
   "name": "git-control",
   "main": "./lib/git-control",
-  "version": "0.7.0",
+  "version": "0.4.0",
   "description": "Provides a GUI interface to manage all commonly-used git commands.",
   "keywords": [
     "git-control",
@@ -22,9 +22,9 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
+    "atom-space-pen-views": "^2.0.3",
     "git-promise": "^0.2.0",
-    "q": "^1.0.1",
-    "atom-space-pen-views": "^2.0.3"
+    "q": "^1.0.1"
   },
   "readme": "# Atom git-control\n\n## What\n\nProvides a GUI interface to manage all commonly-used git commands.\n\nThis is a first-release, while tested as part of creating this package, it has not been extensively used on much larger projects. In short: there are possibly still some issues remaining. At the same time, wanted to get the package out there and used.\n\n![Git](https://raw.githubusercontent.com/jacogr/atom-git-control/master/screenshots/git-01.png)\n\n## How\n\n- Checkout or switch to any available branch with a click on the local/remote branch\n- Select files to commit, either all or with an individual selection\n- Compare the current working tree changes to the selected local branch\n- Merge any other branch into the current active branch\n- Create branches, either by remote selection of local branching\n- Reset any file to its previous state with a checkout\n- All git commands are logged, the commands used and output is visible\n- Command available are activated based on working tree status\n- Automatically fetches remote status on activation\n\n##GitFlow\n\nFor git-flow commands to work, you need to [install git flow](https://github.com/petervanderdoes/gitflow/wiki)\n\nthen, on mac, do the following:\n\n```\n  sudo ln -s /usr/local/bin/git-flow /usr/bin/\n\n  sudo ln -s /usr/local/bin/git-flow-hotfix /usr/bin/\n\n  sudo ln -s /usr/local/bin/git-flow-release /usr/bin/\n\n  sudo ln -s /usr/local/bin/git-flow-version /usr/bin/\n\n  sudo ln -s /usr/local/bin/git-flow-support /usr/bin/\n\n  sudo ln -s /usr/local/bin/git-flow-init /usr/bin/\n\n  sudo ln -s /usr/local/bin/git-flow-feature /usr/bin/\n\n  sudo ln -s /usr/local/bin/gitflow-shFlags /usr/bin/\n\n  sudo ln -s /usr/local/bin/gitflow-common /usr/bin/\n```\n\n## Where\n\nThe Atom package can be found on the Atom registry, [https://atom.io/packages/git-control](https://atom.io/packages/git-control).\n\nPull requests, issues, feature requests are all welcome and encouraged via [https://github.com/jacogr/atom-git-control](https://github.com/jacogr/atom-git-control).\n\nDiscussion and additional input is promoted here: [![Join the chat at https://gitter.im/jacogr/atom-git-control](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jacogr/atom-git-control?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)\n\n## Maintainers\n\n - [MarcelMue](https://github.com/MarcelMue)\n - [Jaco Greeff](https://github.com/jacogr)\n",
   "readmeFilename": "README.md",
@@ -34,8 +34,8 @@
   "homepage": "https://github.com/jacogr/atom-git-control#readme",
   "_id": "git-control@0.4.0",
   "_shasum": "a97445475c58a35ba635d59f4682a4bf787c3e75",
-  "_resolved": "file:../d-1151115-13025-mazxg1/package.tgz",
-  "_from": "../d-1151115-13025-mazxg1/package.tgz",
+  "_resolved": "file:../d-115115-4844-1qffabl/package.tgz",
+  "_from": "../d-115115-4844-1qffabl/package.tgz",
   "_atomModuleCache": {
     "version": 1,
     "dependencies": [
@@ -76,7 +76,7 @@
       },
       {
         "name": "es5-ext",
-        "version": "0.10.10",
+        "version": "0.10.9",
         "path": "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/index.js"
       },
       {
@@ -86,7 +86,7 @@
       },
       {
         "name": "es6-symbol",
-        "version": "3.0.2",
+        "version": "3.0.1",
         "path": "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/node_modules/es6-symbol/index.js"
       },
       {
@@ -126,7 +126,7 @@
       },
       {
         "name": "git-promise",
-        "version": "0.2.0",
+        "version": "0.3.0",
         "path": "node_modules/git-promise/index.js"
       },
       {
@@ -476,7 +476,6 @@
         "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-copy-deep.js",
         "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-copy.js",
         "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-empty.js",
-        "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-number-value.js",
         "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-object.js",
         "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is-plain-object.js",
         "node_modules/atom-space-pen-views/node_modules/space-pen/node_modules/grim/node_modules/emissary/node_modules/es6-weak-map/node_modules/es5-ext/object/is.js",
@@ -771,7 +770,7 @@
           "spec"
         ],
         "dependencies": {
-          "git-promise": "^0.2.0",
+          "git-promise": "^0.3.0",
           "q": "^1.0.1",
           "atom-space-pen-views": "^2.0.3"
         }
@@ -1019,7 +1018,7 @@
         ],
         "dependencies": {
           "d": "~0.1.1",
-          "es5-ext": "~0.10.10"
+          "es5-ext": "~0.10.8"
         }
       },
       {

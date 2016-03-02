@@ -2,6 +2,7 @@ fs = require 'fs'
 path = require 'path'
 
 git = require 'git-promise'
+
 q = require 'q'
 
 logcb = (log, error) ->
@@ -9,7 +10,14 @@ logcb = (log, error) ->
 
 repo = undefined
 cwd = undefined
-projectIndex = 0
+# gitPath = '/usr/local/bin/git'
+project = atom.project
+
+if project
+  repo = project.getRepositories()[0]
+  cwd = if repo then repo.getWorkingDirectory() #prevent startup errors if repo is undefined
+
+
 
 noop = -> q.fcall -> true
 
@@ -28,16 +36,6 @@ getBranches = -> q.fcall ->
     branches.remote.push h.replace('refs/remotes/', '')
 
   return branches
-
-setProjectIndex = (index) ->
-  repo = undefined
-  cwd = undefined
-  projectIndex = index
-  if atom.project
-    repo = atom.project.getRepositories()[index]
-    cwd = if repo then repo.getWorkingDirectory() #prevent startup errors if repo is undefined
-  return
-setProjectIndex(projectIndex)
 
 parseDiff = (data) -> q.fcall ->
   diffs = []
@@ -99,7 +97,7 @@ callGit = (cmd, parser, nodatalog) ->
       logcb e.stdout, true
       logcb e.message, true
       return
-      
+
 module.exports =
   isInitialised: ->
     return cwd
@@ -111,14 +109,6 @@ module.exports =
   setLogger: (cb) ->
     logcb = cb
     return
-
-  setProjectIndex: setProjectIndex
-
-  getProjectIndex: ->
-    return projectIndex
-
-  getRepository: ->
-    return repo
 
   count: (branch) ->
     return repo.getAheadBehindCount(branch)
@@ -188,23 +178,19 @@ module.exports =
       atomRefresh()
       return parseDefault(data)
 
-  pullup: ->
-    return callGit "pull upstream $(git branch | grep '^\*' | sed -n 's/\*[ ]*//p')", (data) ->
-      atomRefresh()
-      return parseDefault(data)
-
   pull: ->
-    return callGit "pull", (data) ->
+    return callGit "hf pull -r", (data) ->
       atomRefresh()
       return parseDefault(data)
 
   flow: (type,action,branch) ->
-    return callGit "flow #{type} #{action} #{branch}", (data) ->
+    return callGit "hf #{type} #{action} #{branch}", (data) ->
       atomRefresh()
       return parseDefault(data)
 
   push: (remote,branch)->
-    cmd = "-c push.default=simple push #{remote} #{branch} --porcelain"
+    cmd = "hf push"
+
     return callGit cmd, (data) ->
       atomRefresh()
       return parseDefault(data)

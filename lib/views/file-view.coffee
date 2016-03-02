@@ -1,20 +1,14 @@
 {View, $} = require 'atom-space-pen-views'
-git = require '../git'
 
 class FileItem extends View
   @content: (file) ->
-    console.log('file', file)
     @div class: "file #{file.type}", 'data-name': file.name, =>
-      @span class: 'clickable text', click: 'select', title: file.name, file.name
       @i class: 'icon check clickable', click: 'select'
-      @i class: "icon #{if (file.type == 'modified') then 'clickable' else ''} file-#{file.type}", click: 'showFileDiff'
+      @i class: "icon file-#{file.type}"
+      @span class: 'clickable', click: 'select', file.name
 
   initialize: (file) ->
     @file = file
-
-  showFileDiff: ->
-    if @file.type == 'modified'
-      @file.showFileDiff(@file.name)
 
   select: ->
     @file.select(@file.name)
@@ -25,8 +19,7 @@ class FileView extends View
     @div class: 'files', =>
       @div class: 'heading clickable', =>
         @i click: 'toggleBranch', class: 'icon forked'
-        @span click: 'toggleBranch', 'Workspace:'
-        @span '', outlet: 'workspaceTitle'
+        @span click: 'toggleBranch', 'Workspace'
         @div class: 'action', click: 'selectAll', =>
           @span 'Select'
           @i class: 'icon check'
@@ -95,13 +88,11 @@ class FileView extends View
       @removeClass('none')
 
       select = (name) => @selectFile(name)
-      showFileDiff = (name) => @showFileDiff(name)
 
       files.forEach (file) =>
         fnames.push file.name
 
         file.select = select
-        file.showFileDiff = showFileDiff
 
         @files[file.name] or= name: file.name
         @files[file.name].type = file.type
@@ -118,12 +109,6 @@ class FileView extends View
 
     @showSelected()
     return
-
-  showFileDiff: (name) ->
-    git.diff(name).then (diffs) =>
-      @parentView.diffView.clearAll()
-      @parentView.diffView.addAll(diffs)
-
 
   selectFile: (name) ->
     if name
@@ -148,8 +133,4 @@ class FileView extends View
     for name, file in @files when file.selected
       file.selected = false
 
-    return
-
-  setWorkspaceTitle: (title) ->
-    @workspaceTitle.text(title)
     return

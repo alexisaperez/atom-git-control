@@ -1,10 +1,10 @@
-# Atom git-control
+# Atom git-hubtroll
 
 ## What
 
 Provides a GUI interface to manage all commonly-used git commands.
 
-This is a first-release, while tested as part of creating this package, it has not been extensively used on much larger projects. In short: there are possibly still some issues remaining. At the same time, wanted to get the package out there and used.
+This is a fork of the [git-control](https://atom.io/packages/git-control) project by [MarcelMue](https://github.com/MarcelMue) and [Jaco Greeff](https://github.com/jacogr). This fork swaps out git flow functionality for [HubFlow](https://datasift.github.io/gitflow/)
 
 ![Git](https://raw.githubusercontent.com/jacogr/atom-git-control/master/screenshots/git-01.png)
 
@@ -22,23 +22,26 @@ This is a first-release, while tested as part of creating this package, it has n
 
 ## GitFlow
 
-For git-flow commands to work, you need to [install git flow](https://github.com/petervanderdoes/gitflow-avh/wiki)
+For git-flow commands to work, you need to [install HubFlow](https://datasift.github.io/gitflow/TheHubFlowTools.html)
 
 then, on mac, do the following:
 
 ```
-  for file in `find /usr/local/bin -type f -iname git[-f]* -exec basename {} \;`; do sudo ln -s /usr/local/bin/$file /usr/bin/$file; done
+sudo ln -s /usr/local/bin/git-hf /usr/bin/
+
+  sudo ln -s /usr/local/bin/git-hf-hotfix /usr/bin/
+
+  sudo ln -s /usr/local/bin/git-hf-release /usr/bin/
+
+  sudo ln -s /usr/local/bin/git-hf-version /usr/bin/
+
+  sudo ln -s /usr/local/bin/git-hf-support /usr/bin/
+
+  sudo ln -s /usr/local/bin/git-hf-init /usr/bin/
+
+  sudo ln -s /usr/local/bin/git-hf-feature /usr/bin/
+
+  sudo ln -s /usr/local/bin/hubflow-shFlags /usr/bin/
+
+  sudo ln -s /usr/local/bin/hubflow-common /usr/bin/
 ```
-
-## Where
-
-The Atom package can be found on the Atom registry, [https://atom.io/packages/git-control](https://atom.io/packages/git-control).
-
-Pull requests, issues, feature requests are all welcome and encouraged via [https://github.com/jacogr/atom-git-control](https://github.com/jacogr/atom-git-control).
-
-Discussion and additional input is promoted here: [![Join the chat at https://gitter.im/jacogr/atom-git-control](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jacogr/atom-git-control?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-## Maintainers
-
- - [MarcelMue](https://github.com/MarcelMue)
- - [Jaco Greeff](https://github.com/jacogr)

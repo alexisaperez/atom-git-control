@@ -16,7 +16,7 @@ class FlowDialog extends Dialog
         @label 'Branch Name:', outlet: 'labelBranchName'
         @input class: 'native-key-bindings', type: 'text', outlet: 'branchName'
         @select class: 'native-key-bindings', outlet: 'branchChoose'
-        @label 'Message:', outlet: 'labelMessage'
+        @label 'Release Message tag: (can not contain spaces and must not be blank)', outlet: 'labelMessage'
         @textarea class: 'native-key-bindings', outlet: 'message'
       @div class: 'buttons', =>
         @button class: 'active', click: 'flow', =>
@@ -51,7 +51,7 @@ class FlowDialog extends Dialog
     @deactivate()
     #init with default branch name
     if (@flowType.val() == "init")
-      @parentView.flow(@flowType.val(),'-d','')
+      @parentView.flow(@flowType.val(),'','')
     else
       branchSelected = if (@branchName.val() != '') then @branchName.val() else @branchChoose.val();
       actionSelected = @flowAction.val()

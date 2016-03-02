@@ -28,8 +28,6 @@ class PushDialog extends Dialog
   activate: (remotes) ->
     @fromBranch.val(git.getLocalBranch())
     @toBranch.find('option').remove()
-    # add simple origin branch
-    @toBranch.append "<option value='origin'>origin</option>"
     for remote in remotes
       @toBranch.append "<option value='#{remote}'>#{remote}</option>"
     return super()
@@ -37,8 +35,7 @@ class PushDialog extends Dialog
   push: ->
     @deactivate()
     remote = @toBranch.val().split('/')[0]
-    # branch = @toBranch.val().split('/')[1]
-    branch = git.getLocalBranch()
+    branch = @toBranch.val().split('/')[1]
     @parentView.push(remote,branch)
     return
 

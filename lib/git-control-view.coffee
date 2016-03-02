@@ -1,14 +1,16 @@
 {View, $, $$} = require 'atom-space-pen-views'
+{View} = require 'space-pen'
 
 git = require './git'
+GitClone = require './git-clone'
 
 BranchView = require './views/branch-view'
 DiffView = require './views/diff-view'
 FileView = require './views/file-view'
 LogView = require './views/log-view'
 MenuView = require './views/menu-view'
+GitCloneView = require './git-clone-view'
 
-ProjectDialog = require './dialogs/project-dialog'
 BranchDialog = require './dialogs/branch-dialog'
 CommitDialog = require './dialogs/commit-dialog'
 ConfirmDialog = require './dialogs/confirm-dialog'
@@ -17,7 +19,6 @@ MergeDialog = require './dialogs/merge-dialog'
 FlowDialog = require './dialogs/flow-dialog'
 PushDialog = require './dialogs/push-dialog'
 
-gitWorkspaceTitle = ''
 
 module.exports =
 class GitControlView extends View
@@ -32,7 +33,6 @@ class GitControlView extends View
             @subview 'remoteBranchView', new BranchView(name: 'Remote')
           @div class: 'domain', =>
             @subview 'diffView', new DiffView()
-          @subview 'projectDialog', new ProjectDialog()
           @subview 'branchDialog', new BranchDialog()
           @subview 'commitDialog', new CommitDialog()
           @subview 'mergeDialog', new MergeDialog()
@@ -54,10 +54,7 @@ class GitControlView extends View
     @branchSelected = null
 
     if !git.isInitialised()
-      git.alert "> This project is not a git repository. Either open another project or create a repository."
-    else
-      @setWorkspaceTitle(git.getRepository().path.split('/').reverse()[1])
-    @update(true)
+           git.alert "> You are seeing this message becuase this folder/project is not a git repository.\n\n\n> Open a previously HubFlow initialized project or clone a GitHub project.\n> If starting a new project create it on GitHub first and then clone it locally.\n> DO NOT check off initialize project on GitHub when creating a new project as this will effect naming consistency.\n> Once you have the local clone initialize it with HubFlow using 'git hf init' in terminal or refresh this page and use the gui menu under 'flow' to initialize the repo for HubFlow.\n\n> NOTE: a Master branch will not be pushed to GitHub until the first initial release is finished. It is safe to ignore error messages during the HubFlow init process\n\n> More information about the HubFlow workflow can be found here http://datasift.github.io/gitflow/index.html"
 
     return
 
@@ -66,9 +63,6 @@ class GitControlView extends View
     @active = false
     return
 
-  setWorkspaceTitle: (title) ->
-    gitWorkspaceTitle = title
-
   getTitle: ->
     return 'git:control'
 
@@ -76,11 +70,10 @@ class GitControlView extends View
     if git.isInitialised()
       @loadBranches()
       @showStatus()
-      @filesView.setWorkspaceTitle(gitWorkspaceTitle)
+
       unless nofetch
         @fetchMenuClick()
-        if @diffView
-          @diffView.clearAll()
+        @diffView.clearAll()
 
     return
 
@@ -124,10 +117,6 @@ class GitControlView extends View
     git.status().then (files) =>
       @filesView.addAll(files)
       return
-    return
-
-  projectMenuClick: ->
-    @projectDialog.activate()
     return
 
   branchMenuClick: ->
@@ -203,10 +192,6 @@ class GitControlView extends View
 
   pullMenuClick: ->
     git.pull().then => @update(true)
-    return
-
-  pullupMenuClick: ->
-    git.pullup().then => @update(true)
     return
 
   pushMenuClick: ->
